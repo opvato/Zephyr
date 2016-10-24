@@ -159,7 +159,7 @@ app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {
-  response.send('Zephyr test')
+  response.send('Zephyr branch')
 })
 
 app.listen(app.get('port'), function() {
