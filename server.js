@@ -20,9 +20,9 @@ if (process.env.project_id){
     console.log('heroku environment found');
     firebase.initializeApp({
         serviceAccount: {
-            projectId: process.env.project_id,
-            clientEmail: process.env.client_email,
-            privateKey: process.env.private_key
+            project_id: process.env.project_id,
+            client_email: process.env.client_email,
+            private_key: process.env.private_key
         },
         databaseURL: "https://op-flight-b85b9.firebaseio.com/"
     });
