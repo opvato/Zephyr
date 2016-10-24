@@ -11,7 +11,6 @@ firebase.initializeApp({
 
 var db = firebase.database();
 
-
 var origin = "BUD"; //origin airport code
 var flex = 6; //days to check
 var tickets = 2; //number of tickets
