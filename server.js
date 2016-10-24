@@ -3,26 +3,14 @@ var async = require('async');
 var moment = require('moment');
 var firebase = require("firebase");
 
-/*var envJSON = {
-    "type": process.env.type,
-    "project_id": process.env.project_id,
-    "private_key_id": process.env.private_key_id,
-    "private_key": process.env.private_key,
-    "client_email": process.env.client_email,
-    "client_id": process.env.client_id,
-    "auth_uri": process.env.auth_uri,
-    "token_uri": process.env.token_uri,
-    "auth_provider_x509_cert_url": process.env.auth_provider_x509_cert_url,
-    "client_x509_cert_url": process.env.client_x509_cert_url
-}*/
-
+/*
 if (process.env.project_id){
     console.log('heroku environment found');
     firebase.initializeApp({
         serviceAccount: {
-            project_id: process.env.project_id,
-            client_email: process.env.client_email,
-            private_key: process.env.private_key
+            projectId: process.env.project_id,
+            clientEmail: process.env.client_email,
+            privateKey: process.env.private_key
         },
         databaseURL: "https://op-flight-b85b9.firebaseio.com/"
     });
@@ -33,9 +21,18 @@ if (process.env.project_id){
         databaseURL: "https://op-flight-b85b9.firebaseio.com/"
     });
 }
+*/
+
+
+
+firebase.initializeApp({
+  databaseURL: "https://op-flight-b85b9.firebaseio.com/"
+});
+
+
 
 var db = firebase.database();
-console.log(db);
+
 
 var origin = "BUD"; //origin airport code
 var flex = 6; //days to check

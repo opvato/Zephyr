@@ -38,3 +38,4 @@ jspm_packages
 
 # Firebase config JSON
 op-flight-b434365c00ec.json
+.env
