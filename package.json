@@ -1,0 +1,19 @@
+{
+  "name": "zephyr",
+  "version": "1.0.0",
+  "description": "Zephyr - cheap flight finder",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.15.1",
+    "async": "^2.1.2",
+    "express": "^4.14.0",
+    "firebase": "^3.5.1",
+    "request": "^2.75.0"
+  }
+}
