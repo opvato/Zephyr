@@ -3,7 +3,7 @@ var async = require('async');
 var moment = require('moment');
 var firebase = require("firebase");
 
-var envJSON = {
+/*var envJSON = {
     "type": process.env.type,
     "project_id": process.env.project_id,
     "private_key_id": process.env.private_key_id,
@@ -14,21 +14,25 @@ var envJSON = {
     "token_uri": process.env.token_uri,
     "auth_provider_x509_cert_url": process.env.auth_provider_x509_cert_url,
     "client_x509_cert_url": process.env.client_x509_cert_url
-}
+}*/
 
-if (envJSON.type){
-    var configJSON = envJSON;
+if (process.env.project_id){
+    console.log('heroku environment found');
+    firebase.initializeApp({
+        serviceAccount: {
+            projectId: process.env.project_id,
+            clientEmail: process.env.client_email,
+            privateKey: process.env.private_key
+        },
+        databaseURL: "https://op-flight-b85b9.firebaseio.com/"
+    });
 }else{
-    var configJSON =  "op-flight-b434365c00ec.json";
+    console.log("local environment found");
+    firebase.initializeApp({
+        serviceAccount: "op-flight-b434365c00ec.json", //excluded from git
+        databaseURL: "https://op-flight-b85b9.firebaseio.com/"
+    });
 }
-
-
-console.log(configJSON);
-
-firebase.initializeApp({
-  serviceAccount: configJSON, //excluded from git
-  databaseURL: "https://op-flight-b85b9.firebaseio.com/"
-});
 
 var db = firebase.database();
 
@@ -39,8 +43,8 @@ var weeks = 15; //number of weeks checked
 var toPrior = ["STN","BVA","ATH","CFU","MLA","SFX","CIA","FCO","VCE","BCN","LPA","MAD","AGP","DUB"]; 
 var toMore = ["CRL","BLL","CPH","BRS","EMA","MAN","TMP","VDA","NUE","BGY","PSA"];
 
-var fareLimit = 4000; //price per ticket in HUF
-var interval = 20000; // 20 seconds;
+var fareLimit = process.env.fare_limit || 8000; //price per ticket in HUF
+var interval = process.env.interval || 100; // 20 seconds;
 
 var toAll = toPrior.concat(toMore);  //no priority check atm
 
