@@ -35,6 +35,7 @@ if (process.env.project_id){
 }
 
 var db = firebase.database();
+console.log(db);
 
 var origin = "BUD"; //origin airport code
 var flex = 6; //days to check
