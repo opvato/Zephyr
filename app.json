@@ -1,0 +1,56 @@
+{
+  "name": "Zephyr",
+  "scripts": {
+  },
+  "env": {
+    "auth_provider_x509_cert_url": {
+      "required": true
+    },
+    "auth_uri": {
+      "required": true
+    },
+    "client_email": {
+      "required": true
+    },
+    "client_id": {
+      "required": true
+    },
+    "client_x509_cert_url": {
+      "required": true
+    },
+    "fare_limit": {
+      "required": true
+    },
+    "interval": {
+      "required": true
+    },
+    "private_key": {
+      "required": true
+    },
+    "private_key_id": {
+      "required": true
+    },
+    "project_id": {
+      "required": true
+    },
+    "token_uri": {
+      "required": true
+    },
+    "type": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
