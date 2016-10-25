@@ -39,7 +39,7 @@ var origin = "BUD"; //origin airport code
 var flex = 6; //days to check
 var tickets = 2; //number of tickets
 var weeks = 15; //number of weeks checked
-var toPrior = ["STN","BVA","ATH","CFU","MLA","SFX","CIA","FCO","VCE","BCN","LPA","MAD","AGP","DUB"]; 
+var toPrior = ["STN","BVA","ATH","CFU","MLA","SXF","CIA","FCO","VCE","BCN","LPA","MAD","AGP","DUB"]; 
 var toMore = ["CRL","BLL","CPH","BRS","EMA","MAN","TMP","VDA","NUE","BGY","PSA"];
 
 var fareLimit = process.env.fare_limit || 8000; //price per ticket in HUF
@@ -114,8 +114,13 @@ var options = {
  
 function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
-    var info = JSON.parse(body);
-    getLowFares(info, fareLimit);
+      try{
+            var info = JSON.parse(body);
+            getLowFares(info, fareLimit);
+      }catch (e){
+          console.log(e);
+      }
+    
   }
 }
 
