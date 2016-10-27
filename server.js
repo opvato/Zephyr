@@ -42,12 +42,41 @@ var weeks = 15; //number of weeks checked
 var toPrior = ["STN","BVA","ATH","CFU","MLA","SXF","CIA","FCO","VCE","BCN","LPA","MAD","AGP","DUB"]; 
 var toMore = ["CRL","BLL","CPH","BRS","EMA","MAN","TMP","VDA","NUE","BGY","PSA"];
 
+var airports = {
+    "BUD": "Budapest",
+    "STN": "London",
+    "BVA": "Párizs",
+    "ATH": "Athén",
+    "CFU": "Korfu",
+    "MLA": "Málta",
+    "SXF": "Berlin",
+    "CIA": "Róma",
+    "FCO": "Róma",
+    "VCE": "Velence",
+    "BCN": "Barcelona",
+    "LPA": "GranCanaria",
+    "MAD": "Madrid",
+    "AGP": "Malaga",
+    "DUB": "Dubai",
+    "CRL": "Brüsszel",
+    "BLL": "Bilund",
+    "CPH": "Koppenhága",
+    "BRS": "Bristol",
+    "EMA": "EastMidlands",
+    "MAN": "Manchester",
+    "TMP": "Tampere",
+    "VDA": "Ovda",
+    "NUE": "Nürnberg",
+    "BGY": "Bergamo",
+    "PSA": "Píza"
+}
+
 var fareLimit = process.env.fare_limit || 8000; //price per ticket in HUF
 var interval = process.env.interval || 100; // 20 seconds;
 
 var toAll = toPrior.concat(toMore);  //no priority check atm
 
-var weeksArr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]; //array of week numbers. its dumb, but still works
+var weeksArr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]; //array of week numbers. its dumb, but still works
 
 var i = 0;
 var j = 0;
@@ -124,32 +153,32 @@ function callback(error, response, body) {
   }
 }
 
+function setFlight(trip, flight, type){
+    var fromCity = airports[trip.origin];
+    var toCity = airports[trip.destination];
+    var key = fromCity + "_" + toCity + "/" + flight[type].fares[0].amount +"/" + flight.time[0].substr(0,10);
+    console.log(key);
+    var ref = db.ref("flights/"+ key);                
+    ref.set(flight);
+}
+
 function getLowFares(response, fareLimit){
     response.trips.forEach(function(trip){
         trip.dates.forEach(function(dates){
             dates.flights.forEach(function(flight){ 
             if(flight.hasOwnProperty('businessFare')){
                 if (flight.businessFare.fares[0].amount < fareLimit){                    
-                    var key = trip.origin + "_" + trip.destination + "_" + flight.time[0].substr(0,10) + "_" + flight.businessFare.fares[0].amount;
-                    console.log(key);
-                    var ref = db.ref("flights/"+ key);                
-                    ref.set(flight);
+                    setFlight(trip, flight, 'businessFare');
                 }
             }
             if(flight.hasOwnProperty('leisureFare')){
                 if (flight.leisureFare.fares[0].amount < fareLimit){
-                    var key = trip.origin + "_" + trip.destination + "_" + flight.time[0].substr(0,10) + "_" + flight.leisureFare.fares[0].amount;
-                    console.log(key);
-                    var ref = db.ref("flights/"+ key);   
-                    ref.set(flight);
+                    setFlight(trip, flight, 'leisureFare');
                 }
             }
             if(flight.hasOwnProperty('regularFare')){
                 if (flight.regularFare.fares[0].amount < fareLimit){
-                    var key = trip.origin + "_" + trip.destination + "_" + flight.time[0].substr(0,10) + "_" + flight.regularFare.fares[0].amount;
-                    console.log(key);
-                    var ref = db.ref("flights/"+ key);   
-                    ref.set(flight);
+                    setFlight(trip, flight, 'regularFare');
                 }
             }
             })
