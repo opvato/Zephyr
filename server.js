@@ -30,7 +30,7 @@ firebase.initializeApp({
 });
 
 console.log(process.env.mode);
-
+console.log("alma");
 
 var db = firebase.database();
 
